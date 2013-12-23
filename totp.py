@@ -9,7 +9,8 @@ try:
 except ImportError:
     from urlparse import urlparse, parse_qs
 
-import fileinput
+# Do not write pyc/pyo files
+sys.dont_write_bytecode = True
 
 # Import from 'dist' directory
 curdir = os.path.join(os.path.dirname(os.path.realpath(__file__)), "dist")
