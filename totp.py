@@ -75,6 +75,6 @@ if __name__ == "__main__":
 
     # Get the token and print
     if type_.upper() == "HOTP":
-        print(otp.get_hotp(secret, intervals_no=options.count))
+        print(otp.get_hotp(secret, intervals_no=options.count, as_string=True))
     else:
-        print(otp.get_totp(secret))
+        print(otp.get_totp(secret, as_string=True))
