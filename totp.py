@@ -27,7 +27,7 @@ def _get_secret(input):
 
 if __name__ == "__main__":
     parser = OptionParser()
-    parser.description = "Prints the TOTP auth code for the given secret. Can be either the raw secret string or a otpauth// URI; the script will attempt to auto-detect which is given."
+    parser.description = "Prints the TOTP auth code for the given secret. Can be either the raw secret string or a otpauth:// URI; the script will attempt to auto-detect which is given."
     parser.usage = "%prog [options] secret"
     parser.epilog = "Copyright (c) Mark Embling 2013"
 
