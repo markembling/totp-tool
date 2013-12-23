@@ -42,8 +42,9 @@ if __name__ == "__main__":
                       help="Counter for HOTP [default: %default]")
 
     (options, args) = parser.parse_args()
-    if len(args) != 1:
-        parser.error("incorrect number of arguments")
+    ARGS_REQD = 1
+    if len(args) != ARGS_REQD:
+        parser.error("incorrect number of arguments (%d required, %d given)" % (ARGS_REQD, len(args)))
 
     # Determine the type and secret
     (secret, type_) = _get_secret(args[0])
