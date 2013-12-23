@@ -15,6 +15,18 @@ import onetimepass as otp
 __author__ = "Mark Embling <mark@markembling.info>"
 __version__ = "0.1"
 
+def _get_data(options, args):
+    '''Gets the raw secret data from either stdin or args'''
+    data = ""
+    if options.stdin:
+        # Read first line from stdin
+        data = sys.stdin.readline()
+    else:
+        if len(args) != 1:
+            parser.error("no secret provided")
+        data = args[0]
+    return data
+
 def _get_secret(input):
     '''Attempts to get the secret from the given string - either the whole
     string itself, or the secret from within an otpauth:// URI.
@@ -30,13 +42,16 @@ def _get_secret(input):
 if __name__ == "__main__":
     parser = OptionParser()
     parser.description = "Prints the TOTP auth code for the given secret. Can be either the raw secret string or a otpauth:// URI; the script will attempt to auto-detect which is given."
-    parser.usage = "%prog [options] secret OR %prog [options] < secret.txt"
+    parser.usage = "%prog [options] secret OR %prog [options] --stdin < secret.txt"
     parser.epilog = "Copyright (c) Mark Embling 2013"
 
-    parser.add_option("-t", "--type", dest="type", 
+    parser.add_option("--stdin", dest="stdin", 
+                      action="store_true", default=False,
+                      help="Read the secret (raw secret or otpauth:// URI) from stdin [default: %default]")
+    parser.add_option("--type", dest="type", 
                       choices=["TOTP", "HOTP"], default="TOTP", 
                       help="Token type (HOTP or TOTP). If a URI is provided, the type will be determined from there. [default: %default]")
-    parser.add_option("-c", "--count", dest="count", 
+    parser.add_option("--count", dest="count", 
                       type="int", default=1,
                       help="Counter for HOTP [default: %default]")
     # parser.add_option("-d", "--digits", dest="digits", 
@@ -45,20 +60,9 @@ if __name__ == "__main__":
 
     (options, args) = parser.parse_args()
 
-    # Get the secret/URI
-    data_in = ""
-    if sys.stdin.isatty():
-        # Use argument
-        ARGS_REQD = 1
-        if len(args) != ARGS_REQD:
-            parser.error("incorrect number of arguments (%d required, %d given)" % (ARGS_REQD, len(args)))
-        data_in = args[0]
-    else:
-        # Read first line from stdin
-        data_in = sys.stdin.readline()
-
-    # Determine the type and secret
-    (secret, type_) = _get_secret(data_in)
+    # Get the secret and type
+    data = _get_data(options, args)
+    (secret, type_) = _get_secret(data)
     if type_ is None:
         type_ = options.type
 
