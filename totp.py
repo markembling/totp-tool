@@ -1,8 +1,15 @@
 #!/usr/bin/env python
 
-import onetimepass as otp
+import os
+import sys
 from optparse import OptionParser
 from urlparse import urlparse, parse_qs
+
+# Import from 'dist' directory
+curdir = os.path.join(os.path.dirname(os.path.realpath(__file__)), "dist")
+sys.path.append(curdir)
+
+import onetimepass as otp
 
 __author__ = "Mark Embling <mark@markembling.info>"
 __version__ = "0.1"
@@ -27,9 +34,9 @@ if __name__ == "__main__":
     parser.add_option("-t", "--type", dest="type", 
                       choices=["TOTP", "HOTP"], default="TOTP", 
                       help="Token type (HOTP or TOTP). If a URI is provided, the type will be determined from there. [default: %default]")
-    parser.add_option("-d", "--digits", dest="digits", 
-                      choices=[6,8], default=6,
-                      help="Number of digits to display (6 or 8) [default: %default]")
+    # parser.add_option("-d", "--digits", dest="digits", 
+    #                   choices=['6','8'], default='6',
+    #                   help="Number of digits to display (6 or 8) [default: %default]")
     parser.add_option("-c", "--count", dest="count", 
                       type="int", default=1,
                       help="Counter for HOTP [default: %default]")
