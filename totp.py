@@ -3,7 +3,12 @@
 import os
 import sys
 from optparse import OptionParser
-from urlparse import urlparse, parse_qs
+
+try:
+    from urllib.parse import urlparse, parse_qs
+except ImportError:
+    from urlparse import urlparse, parse_qs
+
 import fileinput
 
 # Import from 'dist' directory
