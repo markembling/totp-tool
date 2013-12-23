@@ -30,3 +30,6 @@ This script uses the following excellent libraries:
 
 These are packaged within the 'dist' directory so that the entire thing can 
 be placed on a USB stick or similar and used on any python-equipped machine.
+
+The script should work under modern Python 2.x and 3.x versions. It has 
+been tested on 2.7 and 3.3.
