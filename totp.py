@@ -19,6 +19,7 @@ import onetimepass as otp
 
 __author__ = "Mark Embling <mark@markembling.info>"
 __version__ = "0.1"
+__license__ = "BSD (3-clause)"
 
 def _get_data(options, args):
     '''Gets the raw secret data from either stdin or args'''
